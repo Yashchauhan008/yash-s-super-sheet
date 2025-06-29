@@ -20,7 +20,7 @@ const TopBar = ({ onUpdateCompanyName, companyName, toggleSidebar }) => {
         ☰
       </button>
 
-      <div className="logo">🚀 Yash's Placement sheet</div>
+      <div className="logo">🚀 Yash&#39;s Placement sheet</div>
 
       {/* Company section - hidden on small screens via CSS */}
 

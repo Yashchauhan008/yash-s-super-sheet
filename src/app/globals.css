@@ -511,6 +511,7 @@ body {
   .top-bar .logo {
       flex-grow: 1; /* Allow logo to take available space */
       text-align: center; /* Center logo */
+      font-size: 17px;
   }
 
   .company-section {

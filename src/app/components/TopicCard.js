@@ -5,6 +5,7 @@ import React from 'react';
 import TopicItem from './TopicItem';
 import AddSubtopicForm from './AddSubtopicForm';
 import { generateTopicId } from '@/lib/data';
+import { Trash2 } from 'lucide-react';
 
 const TopicCard = ({ title, sectionKey, topics, topicStates, onToggleTopic, onAddSubtopic, onDeleteTopic, onDeleteSection }) => { // Added onDeleteSection prop
   return (
@@ -20,8 +21,8 @@ const TopicCard = ({ title, sectionKey, topics, topicStates, onToggleTopic, onAd
           }}
           title={`Delete "${title}" section`}
         >
-          &#x2715; {/* Unicode 'X' character */}
-        </button>
+          <Trash2 size={20} color="#933e3e" strokeWidth={2.5} />
+          </button>
       </h5>
       <ul className="topic-list">
         {topics.map((topic) => {

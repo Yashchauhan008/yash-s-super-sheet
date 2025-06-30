@@ -11,7 +11,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {/* SVG for gradient definition */}
         <svg width="0" height="0" style={{ position: 'absolute' }}>
           <defs>
             <linearGradient id="gradientPrimary" x1="0%" y1="0%" x2="100%" y2="100%">

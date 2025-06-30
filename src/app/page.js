@@ -30,6 +30,12 @@ export default function HomePage() {
 
     const sectionsToDisplay = [
       {
+        key: 'aptitude',
+        title: 'Aptitude & Reasoning',
+        icon: '🧠',
+        sectionData: topicDefinitions.aptitude,
+      },
+      {
         key: 'core-cs',
         title: 'Core Programming & CS',
         icon: '💻',
@@ -40,12 +46,6 @@ export default function HomePage() {
             database: topicDefinitions.database,
           }
         }
-      },
-      {
-        key: 'aptitude',
-        title: 'Aptitude & Reasoning',
-        icon: '🧠',
-        sectionData: topicDefinitions.aptitude,
       },
       {
         key: 'security-networks',

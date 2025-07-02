@@ -5,13 +5,12 @@ import React from 'react';
 import DashboardStats from './DashboardStats';
 import OverallProgress from './OverallProgress';
 import ProgressCard from './ProgressCard';
-// import TodoList from './TodoList'; // REMOVED
 import { generateTopicId } from '@/lib/data';
-import Link from 'next/link'; // Import Link for navigation
-import { useData } from '../data-context'; // <--- ADD THIS LINE
+import Link from 'next/link';
+import { useData } from '../data-context';
 
-const Sidebar = ({ isOpen, toggleSidebar }) => { // Added isOpen and toggleSidebar props
-  const { topicDefinitions, topicStates, todos } = useData(); // Get data from context
+const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const { topicDefinitions, topicStates, todos } = useData();
 
   let totalTopics = 0;
   let completedTopics = 0;
@@ -77,10 +76,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => { // Added isOpen and toggleSideb
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
         <div className="sidebar-title">📊 Dashboard</div>
-        {/* Close button for mobile sidebar */}
-        <button className="menu-toggle" onClick={toggleSidebar} style={{float: 'right', background: 'none', border: 'none', color: 'var(--primary-text)', fontSize: '1.5em', cursor: 'pointer'}}>
-          &times;
-        </button>
+        {/* Close button for sidebar - always visible when sidebar is open */}
+        {isOpen && ( // Only render if sidebar is open
+          <button className="menu-toggle" onClick={toggleSidebar} style={{ background: 'none', border: 'none', color: 'var(--primary-text)', fontSize: '1.5em', cursor: 'pointer' }}>
+            &times;
+          </button>
+        )}
       </div>
       <div className="sidebar-content">
         <DashboardStats

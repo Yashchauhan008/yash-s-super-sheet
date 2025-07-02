@@ -1,4 +1,5 @@
 /* app/globals.css */
+
 /* --- Base Styles --- */
 * {
   margin: 0;
@@ -41,10 +42,9 @@ body {
   overflow: hidden; /* Prevent body scroll */
 }
 
-/* --- Main Layout (Desktop) --- */
+/* --- Main Layout --- */
 .main-container {
   display: grid;
-  grid-template-columns: 380px 1fr; /* Fixed sidebar, flexible main content */
   grid-template-rows: 1fr;
   height: 100vh;
   width: 100vw;
@@ -57,7 +57,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out; /* For mobile slide-in/out */
   z-index: 1000; /* Ensure sidebar is on top for mobile overlay */
 }
 
@@ -84,7 +83,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* margin-bottom: 15px; */
+  margin-bottom: 15px; /* Restored margin-bottom */
 }
 
 .sidebar-content {
@@ -94,8 +93,8 @@ body {
 }
 
 .sidebar-content::-webkit-scrollbar {
-  /* width: 8px; */
-  display: none;
+  width: 8px; /* Restored scrollbar width */
+  display: block; /* Ensure scrollbar is visible */
 }
 
 .sidebar-content::-webkit-scrollbar-track {
@@ -227,7 +226,6 @@ body {
 .progress-card.networks .mini-progress-fill { background: linear-gradient(135deg, #1f6feb, #58a6ff); }
 .progress-card.swe .mini-progress-fill { background: linear-gradient(135deg, #bc8cff, #d8bcf0); }
 
-/* Generic style for dynamically added topic progress bars */
 .progress-card.dynamic-topic .mini-progress-fill {
   background: var(--gradient-primary);
 }
@@ -272,8 +270,8 @@ body {
   align-items: center;
   justify-content: space-between;
   border: 1px solid #30363d;
-  position: relative; /* Needed for absolute positioning of delete button */
-  padding-right: 35px; /* Make space for the delete button */
+  position: relative;
+  padding-right: 35px;
 }
 
 .todo-item.completed .todo-text {
@@ -288,16 +286,16 @@ body {
   border-bottom: 1px solid #30363d;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Distribute items with space between */
+  justify-content: space-between;
   padding: 0 25px;
   flex-shrink: 0;
-  gap: 20px; /* Add some gap between sections */
+  gap: 20px;
 }
 
 .logo {
   font-size: 1.5em;
   font-weight: 600;
-  white-space: nowrap; /* Prevent logo from wrapping */
+  white-space: nowrap;
 }
 
 .company-input {
@@ -317,7 +315,7 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  white-space: nowrap; /* Prevent button text from wrapping */
+  white-space: nowrap;
 }
 
 .content-area {
@@ -369,8 +367,8 @@ body {
   font-size: 1.1em;
   margin-bottom: 15px;
   font-weight: 500;
-  display: flex; /* To align title and delete button */
-  justify-content: space-between; /* Push delete button to the right */
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -385,6 +383,7 @@ body {
   gap: 12px;
   color: var(--secondary-text);
   font-size: 14px;
+  position: relative; /* Added for delete button positioning */
 }
 
 .topic-item.completed {
@@ -434,22 +433,23 @@ body {
 .delete-btn {
   background: none;
   border: none;
-  color: var(--error-color); /* Red color for delete */
+  color: var(--error-color);
   font-size: 1.2em;
   cursor: pointer;
   padding: 0 5px;
-  opacity: 0; /* Hidden by default */
+  opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  position: relative; /* Position absolutely within topic-item */
-  right: 5px; /* Adjust as needed */
+  position: absolute; /* Corrected positioning */
+  right: 5px;
   top: 50%;
-  /* transform: translateY(-50%); */
-  z-index: 1; /* Ensure it's above other elements if needed */
+  transform: translateY(-50%);
+  z-index: 1;
 }
 
 .topic-item:hover .delete-btn {
-  opacity: 1; /* Show on hover */
+  opacity: 1;
 }
+
 .topic-item2{
   width: 90%;
   display: flex;
@@ -464,112 +464,126 @@ body {
   font-size: 1.2em;
   cursor: pointer;
   padding: 0 5px;
-  opacity: 0; /* Hidden by default */
+  opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
 
 .topic-card:hover .delete-section-btn {
-  opacity: 1; /* Show on hover of the entire card */
+  opacity: 1;
 }
 
-/* --- Responsive Design --- */
+/* --- CORRECTED RESPONSIVE SIDEBAR LOGIC --- */
 
-/* Default styles for TopBar - always show nav buttons */
-.top-bar .nav-buttons {
-  display: flex;
-  gap: 10px;
-  margin-left: auto; /* Push nav buttons to the right */
-}
-
-.top-bar .menu-toggle {
-  display: none; /* Hide menu toggle by default on larger screens */
-}
-
-/* Styles for smaller screens */
-@media (max-width: 1024px) {
+/* --- DESKTOP BEHAVIOR (Collapsible Push) --- */
+@media (min-width: 1025px) {
   .main-container {
-      grid-template-columns: 1fr; /* Main content takes full width */
+    grid-template-columns: 380px 1fr;
+    transition: grid-template-columns 0.3s ease-in-out;
+  }
+
+  .main-container.sidebar-collapsed {
+    grid-template-columns: 0px 1fr;
   }
 
   .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 300px; /* Smaller width for mobile sidebar */
-      height: 100%;
-      transform: translateX(-100%); /* Hide off-screen */
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .main-container.sidebar-collapsed .sidebar {
+    width: 0;
+    border-right: none;
+  }
+
+  .main-container.sidebar-collapsed .sidebar-content,
+  .main-container.sidebar-collapsed .sidebar-header .sidebar-title {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in-out;
+  }
+}
+
+/* --- MOBILE BEHAVIOR (Overlay) --- */
+@media (max-width: 1024px) {
+  .main-container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
   }
 
   .sidebar.open {
-      transform: translateX(0); /* Slide in */
+    transform: translateX(0);
   }
 
+  .main-content-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .sidebar.open ~ .main-content-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* --- TopBar Specifics --- */
+.top-bar .menu-toggle {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--primary-text);
+  font-size: 1.8em;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.top-bar .nav-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* --- Mobile Specific Overrides for TopBar --- */
+@media (max-width: 1024px) {
   .top-bar {
-      padding: 0 15px; /* Adjust padding for smaller screens */
-      justify-content: flex-start; /* Align items to the start */
-      gap: 15px; /* Reduce gap */
-  }
-
-  .top-bar .menu-toggle {
-      display: block; /* Show menu toggle button on small screens */
-      background: none;
-      border: none;
-      color: var(--primary-text);
-      font-size: 1.8em;
-      cursor: pointer;
+    padding: 0 15px;
+    justify-content: flex-start;
+    gap: 15px;
   }
 
   .top-bar .logo {
-      flex-grow: 1; /* Allow logo to take available space */
-      text-align: center; /* Center logo */
-      font-size: 17px;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 17px;
   }
 
   .company-section {
-      display: none; /* Hide company input on small screens for simplicity */
+    display: none;
   }
 
   .top-bar .nav-buttons {
-      /* On small screens, nav buttons might be better in the sidebar or hidden */
-      /* For now, let's keep them, but they might get squished. */
-      /* Consider moving them to the sidebar or making them icons if space is tight */
-      display: flex; /* Keep them visible */
-      margin-left: 0; /* Remove auto margin */
-  }
-  .top-bar .menu-toggle {
-      display: block; /* Show menu toggle button */
-      background: none;
-      border: none;
-      color: var(--primary-text);
-      font-size: 1.8em;
-      cursor: pointer;
-      margin-right: 15px;
-  }
-
-  .top-bar .logo {
-      flex-grow: 1; /* Push other elements to the right */
-      text-align: center;
-  }
-
-  .company-section {
-      display: none; /* Hide company input on small screens for simplicity */
+    margin-left: 0;
   }
 }
 
-/* Hide menu toggle and nav buttons on larger screens */
-@media (min-width: 1025px) {
-  .top-bar .menu-toggle {
-      display: none;
-  }
-}
-
-
-
-
-/* From Uiverse.io by 00Kubi */ 
-
-
+/* --- Neon Checkbox Styles (Restored) --- */
 .neon-checkbox {
   --primary: #00ffaa;
   --primary-dark: #30363D;
@@ -715,13 +729,11 @@ body {
   opacity: 0;
 }
 
-/* Hover Effects */
 .neon-checkbox:hover .neon-checkbox__box {
   border-color: var(--primary);
   transform: scale(1.05);
 }
 
-/* Checked State */
 .neon-checkbox input:checked ~ .neon-checkbox__frame .neon-checkbox__box {
   border-color: var(--primary);
   background: rgba(0, 255, 170, 0.1);
@@ -736,207 +748,81 @@ body {
   opacity: 0.2;
 }
 
-.neon-checkbox
-  input:checked
-  ~ .neon-checkbox__frame
-  .neon-checkbox__borders
-  span {
+.neon-checkbox input:checked ~ .neon-checkbox__frame .neon-checkbox__borders span {
   opacity: 1;
 }
 
-/* Particle Animations */
-.neon-checkbox
-  input:checked
-  ~ .neon-checkbox__frame
-  .neon-checkbox__particles
-  span {
+.neon-checkbox input:checked ~ .neon-checkbox__frame .neon-checkbox__particles span {
   animation: particleExplosion 0.6s ease-out forwards;
 }
 
-.neon-checkbox
-  input:checked
-  ~ .neon-checkbox__frame
-  .neon-checkbox__rings
-  .ring {
+.neon-checkbox input:checked ~ .neon-checkbox__frame .neon-checkbox__rings .ring {
   animation: ringPulse 0.6s ease-out forwards;
 }
 
-.neon-checkbox
-  input:checked
-  ~ .neon-checkbox__frame
-  .neon-checkbox__sparks
-  span {
+.neon-checkbox input:checked ~ .neon-checkbox__frame .neon-checkbox__sparks span {
   animation: sparkFlash 0.6s ease-out forwards;
 }
 
-/* Animations */
 @keyframes borderFlow1 {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(200%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(200%); }
 }
 
 @keyframes borderFlow2 {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(200%);
-  }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(200%); }
 }
 
 @keyframes borderFlow3 {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-200%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-200%); }
 }
 
 @keyframes borderFlow4 {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-200%);
-  }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-200%); }
 }
 
 @keyframes particleExplosion {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(
-        calc(-50% + var(--x, 20px)),
-        calc(-50% + var(--y, 20px))
-      )
-      scale(0);
-    opacity: 0;
-  }
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x, 20px)), calc(-50% + var(--y, 20px))) scale(0); opacity: 0; }
 }
 
 @keyframes ringPulse {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
 }
 
 @keyframes sparkFlash {
-  0% {
-    transform: rotate(var(--r, 0deg)) translateX(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: rotate(var(--r, 0deg)) translateX(30px) scale(0);
-    opacity: 0;
-  }
+  0% { transform: rotate(var(--r, 0deg)) translateX(0) scale(1); opacity: 1; }
+  100% { transform: rotate(var(--r, 0deg)) translateX(30px) scale(0); opacity: 0; }
 }
 
-/* Particle Positions */
-.neon-checkbox__particles span:nth-child(1) {
-  --x: 25px;
-  --y: -25px;
-}
-.neon-checkbox__particles span:nth-child(2) {
-  --x: -25px;
-  --y: -25px;
-}
-.neon-checkbox__particles span:nth-child(3) {
-  --x: 25px;
-  --y: 25px;
-}
-.neon-checkbox__particles span:nth-child(4) {
-  --x: -25px;
-  --y: 25px;
-}
-.neon-checkbox__particles span:nth-child(5) {
-  --x: 35px;
-  --y: 0px;
-}
-.neon-checkbox__particles span:nth-child(6) {
-  --x: -35px;
-  --y: 0px;
-}
-.neon-checkbox__particles span:nth-child(7) {
-  --x: 0px;
-  --y: 35px;
-}
-.neon-checkbox__particles span:nth-child(8) {
-  --x: 0px;
-  --y: -35px;
-}
-.neon-checkbox__particles span:nth-child(9) {
-  --x: 20px;
-  --y: -30px;
-}
-.neon-checkbox__particles span:nth-child(10) {
-  --x: -20px;
-  --y: 30px;
-}
-.neon-checkbox__particles span:nth-child(11) {
-  --x: 30px;
-  --y: 20px;
-}
-.neon-checkbox__particles span:nth-child(12) {
-  --x: -30px;
-  --y: -20px;
-}
+.neon-checkbox__particles span:nth-child(1) { --x: 25px; --y: -25px; }
+.neon-checkbox__particles span:nth-child(2) { --x: -25px; --y: -25px; }
+.neon-checkbox__particles span:nth-child(3) { --x: 25px; --y: 25px; }
+.neon-checkbox__particles span:nth-child(4) { --x: -25px; --y: 25px; }
+.neon-checkbox__particles span:nth-child(5) { --x: 35px; --y: 0px; }
+.neon-checkbox__particles span:nth-child(6) { --x: -35px; --y: 0px; }
+.neon-checkbox__particles span:nth-child(7) { --x: 0px; --y: 35px; }
+.neon-checkbox__particles span:nth-child(8) { --x: 0px; --y: -35px; }
+.neon-checkbox__particles span:nth-child(9) { --x: 20px; --y: -30px; }
+.neon-checkbox__particles span:nth-child(10) { --x: -20px; --y: 30px; }
+.neon-checkbox__particles span:nth-child(11) { --x: 30px; --y: 20px; }
+.neon-checkbox__particles span:nth-child(12) { --x: -30px; --y: -20px; }
 
-/* Spark Rotations */
-.neon-checkbox__sparks span:nth-child(1) {
-  --r: 0deg;
-  top: 50%;
-  left: 50%;
-}
-.neon-checkbox__sparks span:nth-child(2) {
-  --r: 90deg;
-  top: 50%;
-  left: 50%;
-}
-.neon-checkbox__sparks span:nth-child(3) {
-  --r: 180deg;
-  top: 50%;
-  left: 50%;
-}
-.neon-checkbox__sparks span:nth-child(4) {
-  --r: 270deg;
-  top: 50%;
-  left: 50%;
-}
+.neon-checkbox__sparks span:nth-child(1) { --r: 0deg; top: 50%; left: 50%; }
+.neon-checkbox__sparks span:nth-child(2) { --r: 90deg; top: 50%; left: 50%; }
+.neon-checkbox__sparks span:nth-child(3) { --r: 180deg; top: 50%; left: 50%; }
+.neon-checkbox__sparks span:nth-child(4) { --r: 270deg; top: 50%; left: 50%; }
 
-/* Ring Delays */
-.neon-checkbox__rings .ring:nth-child(1) {
-  animation-delay: 0s;
-}
-.neon-checkbox__rings .ring:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.neon-checkbox__rings .ring:nth-child(3) {
-  animation-delay: 0.2s;
-}
+.neon-checkbox__rings .ring:nth-child(1) { animation-delay: 0s; }
+.neon-checkbox__rings .ring:nth-child(2) { animation-delay: 0.1s; }
+.neon-checkbox__rings .ring:nth-child(3) { animation-delay: 0.2s; }
 
-
-
-
-/* ---------------------------- */
-
-
-
-
+/* --- Markdown Content --- */
 .markdown-content {
   background: var(--secondary-bg);
   padding: 25px;
@@ -1018,296 +904,3 @@ body {
   border-top: 1px solid #30363d;
   margin: 2em 0;
 }
-
-/* app/globals.css */
-/* ... (existing styles) ... */
-
-/* --- Main Layout (Desktop & Collapsible) --- */
-.main-container {
-  display: grid;
-  /* Default: Sidebar open (380px) */
-  grid-template-columns: 380px 1fr;
-  grid-template-rows: 1fr;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  transition: grid-template-columns 0.3s ease-in-out; /* Smooth transition for sidebar collapse */
-}
-
-/* State when sidebar is collapsed */
-.main-container.sidebar-collapsed {
-  grid-template-columns: 0px 1fr; /* Collapse sidebar to 0 width */
-}
-
-.sidebar {
-  background: var(--secondary-bg);
-  border-right: 1px solid #30363d;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  /* For desktop, we'll hide content if width is 0, not translateX */
-  /* For mobile, we'll still use translateX for fixed overlay */
-  transition: width 0.3s ease-in-out; /* Smooth transition for sidebar width */
-  z-index: 1000; /* Ensure sidebar is on top for mobile overlay */
-}
-
-/* When sidebar is collapsed, hide its content to prevent overflow */
-.main-container.sidebar-collapsed .sidebar {
-  width: 0; /* Explicitly set width to 0 for transition */
-  border-right: none; /* Remove border when collapsed */
-}
-
-/* Ensure sidebar content is hidden when sidebar is collapsed */
-.main-container.sidebar-collapsed .sidebar-content,
-.main-container.sidebar-collapsed .sidebar-header .sidebar-title {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.1s ease-in-out; /* Fade out content quickly */
-}
-
-/* --- Sidebar Content --- */
-.sidebar-header {
-  padding: 20px;
-  border-bottom: 1px solid #30363d;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sidebar-title {
-  font-size: 1.5em;
-  font-weight: 600;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 15px; /* Keep margin for spacing */
-}
-
-/* ... (rest of existing sidebar styles) ... */
-
-
-/* --- Main Content Area --- */
-.top-bar {
-  height: 60px;
-  background: var(--secondary-bg);
-  border-bottom: 1px solid #30363d;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 25px;
-  flex-shrink: 0;
-  gap: 20px;
-}
-
-.logo {
-  font-size: 1.5em;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* Ensure menu-toggle is always visible */
-.top-bar .menu-toggle {
-  display: block; /* Always show the menu toggle */
-  background: none;
-  border: none;
-  color: var(--primary-text);
-  font-size: 1.8em;
-  cursor: pointer;
-  margin-right: 15px; /* Add some space */
-}
-
-/* ... (rest of existing top-bar styles) ... */
-
-
-/* --- Responsive Design --- */
-
-/* Default styles for TopBar - always show nav buttons */
-.top-bar .nav-buttons {
-  display: flex;
-  gap: 10px;
-  margin-left: auto;
-}
-
-/* Remove the specific media query that hid menu-toggle on large screens */
-/* @media (min-width: 1025px) {
-  .top-bar .menu-toggle {
-      display: none;
-  }
-} */
-
-/* Mobile specific overrides */
-@media (max-width: 1024px) {
-  .main-container {
-    grid-template-columns: 1fr; /* Main content takes full width */
-  }
-
-  .sidebar {
-    position: fixed; /* Overlay for mobile */
-    top: 0;
-    left: 0;
-    width: 300px; /* Smaller width for mobile sidebar */
-    height: 100%;
-    transform: translateX(-100%); /* Hide off-screen */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-    /* Ensure content is visible when open */
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .sidebar.open {
-    transform: translateX(0); /* Slide in */
-  }
-
-  /* When sidebar is open on mobile, hide the main content to prevent interaction */
-  .main-container.sidebar-collapsed .main-content {
-    pointer-events: none;
-    opacity: 0.5; /* Dim the background */
-  }
-
-  .top-bar {
-    padding: 0 15px;
-    justify-content: flex-start;
-    gap: 15px;
-  }
-
-  .top-bar .logo {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 17px;
-  }
-
-  .company-section {
-    display: none;
-  }
-
-  .top-bar .nav-buttons {
-    display: flex;
-    margin-left: 0;
-  }
-
-  /* Ensure the close button in sidebar is visible on mobile when open */
-  .sidebar.open .sidebar-header .menu-toggle {
-    display: block; /* Ensure it's visible to close */
-  }
-}
-
-
-/* app/globals.css */
-/* ... (existing styles up to body) ... */
-
-/* --- Main Layout --- */
-.main-container {
-  display: grid;
-  grid-template-rows: 1fr;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
-
-.sidebar {
-  background: var(--secondary-bg);
-  border-right: 1px solid #30363d;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* --- DESKTOP BEHAVIOR (Collapsible Push) --- */
-@media (min-width: 1025px) {
-  .main-container {
-    /* Sidebar is open by default */
-    grid-template-columns: 380px 1fr;
-    transition: grid-template-columns 0.3s ease-in-out;
-  }
-
-  .main-container.sidebar-collapsed {
-    /* Collapse sidebar to 0 width */
-    grid-template-columns: 0px 1fr;
-  }
-
-  .sidebar {
-    /* For desktop, the sidebar is part of the grid */
-    position: relative;
-    transition: width 0.3s ease-in-out;
-  }
-
-  .main-container.sidebar-collapsed .sidebar {
-    width: 0;
-    border-right: none;
-  }
-
-  /* Hide content when collapsed on desktop */
-  .main-container.sidebar-collapsed .sidebar-content,
-  .main-container.sidebar-collapsed .sidebar-header .sidebar-title {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.1s ease-in-out;
-  }
-}
-
-
-/* --- MOBILE BEHAVIOR (Overlay) --- */
-@media (max-width: 1024px) {
-  .main-container {
-    /* On mobile, main content always takes full width */
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    /* On mobile, sidebar is an overlay */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 100%;
-    transform: translateX(-100%); /* Hidden by default */
-    transition: transform 0.3s ease-in-out; /* Animate the slide */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-  }
-
-  .sidebar.open {
-    transform: translateX(0); /* Slide in */
-  }
-
-  /* This is the overlay that dims the background */
-  .main-content-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Below sidebar, above main content */
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  /* Show the overlay ONLY when the sidebar is open */
-  .sidebar.open ~ .main-content-overlay {
-    opacity: 1;
-    pointer-events: auto; /* Allow clicking on overlay to close sidebar */
-  }
-}
-
-
-/* --- Sidebar Content --- */
-.sidebar-header {
-  padding: 20px;
-  border-bottom: 1px solid #30363d;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* ... (The rest of your CSS file remains the same) ... */

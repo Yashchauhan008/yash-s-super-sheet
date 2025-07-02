@@ -1192,3 +1192,122 @@ body {
     display: block; /* Ensure it's visible to close */
   }
 }
+
+
+/* app/globals.css */
+/* ... (existing styles up to body) ... */
+
+/* --- Main Layout --- */
+.main-container {
+  display: grid;
+  grid-template-rows: 1fr;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  background: var(--secondary-bg);
+  border-right: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- DESKTOP BEHAVIOR (Collapsible Push) --- */
+@media (min-width: 1025px) {
+  .main-container {
+    /* Sidebar is open by default */
+    grid-template-columns: 380px 1fr;
+    transition: grid-template-columns 0.3s ease-in-out;
+  }
+
+  .main-container.sidebar-collapsed {
+    /* Collapse sidebar to 0 width */
+    grid-template-columns: 0px 1fr;
+  }
+
+  .sidebar {
+    /* For desktop, the sidebar is part of the grid */
+    position: relative;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .main-container.sidebar-collapsed .sidebar {
+    width: 0;
+    border-right: none;
+  }
+
+  /* Hide content when collapsed on desktop */
+  .main-container.sidebar-collapsed .sidebar-content,
+  .main-container.sidebar-collapsed .sidebar-header .sidebar-title {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in-out;
+  }
+}
+
+
+/* --- MOBILE BEHAVIOR (Overlay) --- */
+@media (max-width: 1024px) {
+  .main-container {
+    /* On mobile, main content always takes full width */
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    /* On mobile, sidebar is an overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    transform: translateX(-100%); /* Hidden by default */
+    transition: transform 0.3s ease-in-out; /* Animate the slide */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Slide in */
+  }
+
+  /* This is the overlay that dims the background */
+  .main-content-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Below sidebar, above main content */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  /* Show the overlay ONLY when the sidebar is open */
+  .sidebar.open ~ .main-content-overlay {
+    opacity: 1;
+    pointer-events: auto; /* Allow clicking on overlay to close sidebar */
+  }
+}
+
+
+/* --- Sidebar Content --- */
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ... (The rest of your CSS file remains the same) ... */

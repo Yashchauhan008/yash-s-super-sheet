@@ -1,20 +1,32 @@
 # Permutation & Combination
 
-Permutation deals with arrangements of items where order matters, while Combination deals with selections where order does not matter.
+Permutation is about arrangements (order matters), and Combination is about selections (order doesn't matter).
 
 ## Key Concepts
 *   **Factorial**: `n! = n × (n-1) × ... × 1`
-*   **Permutation (Arrangement)**: The number of ways to arrange 'r' items from a set of 'n' items.
-*   **Combination (Selection)**: The number of ways to select 'r' items from a set of 'n' items.
+*   **Permutation (nPr)**: Arranging 'r' items from 'n'.
+*   **Combination (nCr)**: Selecting 'r' items from 'n'.
 
 ## Formula Shortcuts
 *   **Permutation Formula (nPr)**: `n! / (n-r)!`
 *   **Combination Formula (nCr)**: `n! / (r! * (n-r)!)`
-*   **Relationship**: `nPr = nCr × r!`
-*   **Circular Permutations**:
-    *   Number of ways to arrange 'n' distinct items in a circle: `(n-1)!`
-    *   For necklaces or garlands (where clockwise and anti-clockwise are the same): `(n-1)! / 2`
-*   **Important Properties**: `nC0 = 1`, `nCn = 1`, `nCr = nC(n-r)`
+*   **Circular Permutations**: `(n-1)!` for 'n' distinct items.
+
+## Examples
+
+**1. Permutation (Arrangement)**
+*   **Question**: In how many different ways can the letters of the word 'JUDGE' be arranged?
+*   **Solution**:
+    *   The word 'JUDGE' has 5 distinct letters.
+    *   The number of arrangements is `5! = 5 × 4 × 3 × 2 × 1 = 120`.
+
+**2. Combination (Selection)**
+*   **Question**: A committee of 3 members is to be formed from a group of 5 men and 4 women. In how many ways can this be done?
+*   **Solution**:
+    *   Total people = 5 + 4 = 9.
+    *   We need to select 3 people from 9. Order doesn't matter.
+    *   Number of ways = `9C3 = 9! / (3! * (9-3)!)`
+    *   `= 9! / (3! * 6!) = (9 × 8 × 7) / (3 × 2 × 1) = 3 × 4 × 7 = 84`.
 
 ## Reference Sites
 *   **GeeksforGeeks**: [https://www.geeksforgeeks.org/permutation-and-combination/](https://www.geeksforgeeks.org/permutation-and-combination/ ) [11]

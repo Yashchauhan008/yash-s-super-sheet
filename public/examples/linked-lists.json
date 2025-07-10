@@ -1,0 +1,212 @@
+[
+  {
+    "title": "Linked List Implementation",
+    "description": "Basic linked list implementation with common operations.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Complete implementation",
+        "code": "import java.util.Scanner;\n\n// Node class\nclass Node {\n    int data;\n    Node next;\n\n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\n\n// Linked List class\nclass LinkedList {\n    Node head;\n\n    // Insert at beginning\n    void insertAtBeginning(int data) {\n        Node newNode = new Node(data);\n        newNode.next = head;\n        head = newNode;\n    }\n\n    // Insert at end\n    void insertAtEnd(int data) {\n        Node newNode = new Node(data);\n        if (head == null) {\n            head = newNode;\n            return;\n        }\n        Node temp = head;\n        while (temp.next != null) {\n            temp = temp.next;\n        }\n        temp.next = newNode;\n    }\n\n    // Delete a node with a specific value\n    void deleteNode(int data) {\n        if (head == null) {\n            System.out.println(\"List is empty.\");\n            return;\n        }\n\n        if (head.data == data) {\n            head = head.next;\n            return;\n        }\n\n        Node temp = head;\n        while (temp.next != null && temp.next.data != data) {\n            temp = temp.next;\n        }\n\n        if (temp.next != null) {\n            temp.next = temp.next.next;\n        } else {\n            System.out.println(\"Value not found.\");\n        }\n    }\n\n    // Display list\n    void display() {\n        if (head == null) {\n            System.out.println(\"List is empty.\");\n            return;\n        }\n\n        Node temp = head;\n        while (temp != null) {\n            System.out.print(temp.data + \" -> \");\n            temp = temp.next;\n        }\n        System.out.println(\"null\");\n    }\n}\n\n// Main class with menu\npublic class Main {\n    public static void main(String[] args) {\n        LinkedList list = new LinkedList();\n        Scanner sc = new Scanner(System.in);\n        int choice, value;\n\n        do {\n            System.out.println(\"\\n=== MENU ===\");\n            System.out.println(\"1. Insert at Beginning\");\n            System.out.println(\"2. Insert at End\");\n            System.out.println(\"3. Delete by Value\");\n            System.out.println(\"4. Display List\");\n            System.out.println(\"0. Exit\");\n            System.out.print(\"Enter choice: \");\n            choice = sc.nextInt();\n\n            switch (choice) {\n                case 1:\n                    System.out.print(\"Enter value to insert at beginning: \");\n                    value = sc.nextInt();\n                    list.insertAtBeginning(value);\n                    break;\n                case 2:\n                    System.out.print(\"Enter value to insert at end: \");\n                    value = sc.nextInt();\n                    list.insertAtEnd(value);\n                    break;\n                case 3:\n                    System.out.print(\"Enter value to delete: \");\n                    value = sc.nextInt();\n                    list.deleteNode(value);\n                    break;\n                case 4:\n                    System.out.println(\"Linked List:\");\n                    list.display();\n                    break;\n                case 0:\n                    System.out.println(\"Exiting program.\");\n                    break;\n                default:\n                    System.out.println(\"Invalid choice. Try again.\");\n            }\n\n        } while (choice != 0);\n\n        sc.close();\n    }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Complete implementation",
+        "code": "class ListNode {\n  constructor(val = 0, next = null) {\n    this.val = val;\n    this.next = next;\n  }\n}\n\nclass LinkedList {\n  constructor() {\n    this.head = null;\n  }\n  \n  insertAtBeginning(val) {\n    const newNode = new ListNode(val);\n    newNode.next = this.head;\n    this.head = newNode;\n  }\n  \n  insertAtEnd(val) {\n    const newNode = new ListNode(val);\n    if (!this.head) {\n      this.head = newNode;\n      return;\n    }\n    let current = this.head;\n    while (current.next) {\n      current = current.next;\n    }\n    current.next = newNode;\n  }\n  \n  deleteNode(val) {\n    if (!this.head) return;\n    if (this.head.val === val) {\n      this.head = this.head.next;\n      return;\n    }\n    let current = this.head;\n    while (current.next && current.next.val !== val) {\n      current = current.next;\n    }\n    if (current.next) {\n      current.next = current.next.next;\n    }\n  }\n  \n  display() {\n    let result = [];\n    let current = this.head;\n    while (current) {\n      result.push(current.val);\n      current = current.next;\n    }\n    console.log(result.join(' -> ') + ' -> null');\n  }\n}"
+      }
+    ]
+  },
+  {
+    "title": "Reverse Linked List",
+    "description": "Reverse a singly linked list iteratively and recursively.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Iterative",
+        "code": "public class ReverseLinkedList {\n  public static ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n      ListNode nextTemp = current.next;\n      current.next = prev;\n      prev = current;\n      current = nextTemp;\n    }\n    \n    return prev;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "Recursive",
+        "code": "public class ReverseLinkedList {\n  public static ListNode reverseList(ListNode head) {\n    if (head == null || head.next == null) {\n      return head;\n    }\n    \n    ListNode reversedHead = reverseList(head.next);\n    head.next.next = head;\n    head.next = null;\n    \n    return reversedHead;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Iterative",
+        "code": "function reverseList(head) {\n  let prev = null;\n  let current = head;\n  \n  while (current !== null) {\n    let nextTemp = current.next;\n    current.next = prev;\n    prev = current;\n    current = nextTemp;\n  }\n  \n  return prev;\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Recursive",
+        "code": "function reverseList(head) {\n  if (!head || !head.next) {\n    return head;\n  }\n  \n  let reversedHead = reverseList(head.next);\n  head.next.next = head;\n  head.next = null;\n  \n  return reversedHead;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Detect Cycle in Linked List",
+    "description": "Check if a linked list has a cycle using Floyd's algorithm.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Floyd's Cycle Detection",
+        "code": "public class DetectCycle {\n  public static boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) return false;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n      slow = slow.next;\n      fast = fast.next.next;\n      \n      if (slow == fast) {\n        return true;\n      }\n    }\n    \n    return false;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "HashSet",
+        "code": "import java.util.HashSet;\n\npublic class DetectCycle {\n  public static boolean hasCycle(ListNode head) {\n    HashSet<ListNode> visited = new HashSet<>();\n    \n    while (head != null) {\n      if (visited.contains(head)) {\n        return true;\n      }\n      visited.add(head);\n      head = head.next;\n    }\n    \n    return false;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Floyd's Cycle Detection",
+        "code": "function hasCycle(head) {\n  if (!head || !head.next) return false;\n  \n  let slow = head;\n  let fast = head;\n  \n  while (fast && fast.next) {\n    slow = slow.next;\n    fast = fast.next.next;\n    \n    if (slow === fast) {\n      return true;\n    }\n  }\n  \n  return false;\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Set",
+        "code": "function hasCycle(head) {\n  let visited = new Set();\n  \n  while (head) {\n    if (visited.has(head)) {\n      return true;\n    }\n    visited.add(head);\n    head = head.next;\n  }\n  \n  return false;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Merge Two Sorted Lists",
+    "description": "Merge two sorted linked lists into one sorted list.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Iterative",
+        "code": "public class MergeTwoLists {\n  public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    \n    while (l1 != null && l2 != null) {\n      if (l1.val <= l2.val) {\n        current.next = l1;\n        l1 = l1.next;\n      } else {\n        current.next = l2;\n        l2 = l2.next;\n      }\n      current = current.next;\n    }\n    \n    current.next = l1 != null ? l1 : l2;\n    \n    return dummy.next;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "Recursive",
+        "code": "public class MergeTwoLists {\n  public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    if (l1 == null) return l2;\n    if (l2 == null) return l1;\n    \n    if (l1.val <= l2.val) {\n      l1.next = mergeTwoLists(l1.next, l2);\n      return l1;\n    } else {\n      l2.next = mergeTwoLists(l1, l2.next);\n      return l2;\n    }\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Iterative",
+        "code": "function mergeTwoLists(l1, l2) {\n  let dummy = new ListNode(0);\n  let current = dummy;\n  \n  while (l1 && l2) {\n    if (l1.val <= l2.val) {\n      current.next = l1;\n      l1 = l1.next;\n    } else {\n      current.next = l2;\n      l2 = l2.next;\n    }\n    current = current.next;\n  }\n  \n  current.next = l1 || l2;\n  \n  return dummy.next;\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Recursive",
+        "code": "function mergeTwoLists(l1, l2) {\n  if (!l1) return l2;\n  if (!l2) return l1;\n  \n  if (l1.val <= l2.val) {\n    l1.next = mergeTwoLists(l1.next, l2);\n    return l1;\n  } else {\n    l2.next = mergeTwoLists(l1, l2.next);\n    return l2;\n  }\n}"
+      }
+    ]
+  },
+  {
+    "title": "Find Middle of Linked List",
+    "description": "Find the middle node of a linked list using slow-fast pointers.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Two pointers",
+        "code": "public class FindMiddle {\n  public static ListNode findMiddle(ListNode head) {\n    if (head == null) return null;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n      slow = slow.next;\n      fast = fast.next.next;\n    }\n    \n    return slow;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "Count nodes",
+        "code": "public class FindMiddle {\n  public static ListNode findMiddle(ListNode head) {\n    if (head == null) return null;\n    \n    int count = 0;\n    ListNode current = head;\n    while (current != null) {\n      count++;\n      current = current.next;\n    }\n    \n    current = head;\n    for (int i = 0; i < count / 2; i++) {\n      current = current.next;\n    }\n    \n    return current;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Two pointers",
+        "code": "function findMiddle(head) {\n  if (!head) return null;\n  \n  let slow = head;\n  let fast = head;\n  \n  while (fast && fast.next) {\n    slow = slow.next;\n    fast = fast.next.next;\n  }\n  \n  return slow;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Remove Nth Node From End",
+    "description": "Remove the nth node from the end of a linked list.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Two pointers",
+        "code": "public class RemoveNthFromEnd {\n  public static ListNode removeNthFromEnd(ListNode head, int n) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    \n    ListNode first = dummy;\n    ListNode second = dummy;\n    \n    for (int i = 0; i <= n; i++) {\n      first = first.next;\n    }\n    \n    while (first != null) {\n      first = first.next;\n      second = second.next;\n    }\n    \n    second.next = second.next.next;\n    \n    return dummy.next;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "Calculate length",
+        "code": "public class RemoveNthFromEnd {\n  public static ListNode removeNthFromEnd(ListNode head, int n) {\n    int length = 0;\n    ListNode current = head;\n    while (current != null) {\n      length++;\n      current = current.next;\n    }\n    \n    if (length == n) {\n      return head.next;\n    }\n    \n    current = head;\n    for (int i = 0; i < length - n - 1; i++) {\n      current = current.next;\n    }\n    \n    current.next = current.next.next;\n    \n    return head;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Two pointers",
+        "code": "function removeNthFromEnd(head, n) {\n  let dummy = new ListNode(0);\n  dummy.next = head;\n  \n  let first = dummy;\n  let second = dummy;\n  \n  for (let i = 0; i <= n; i++) {\n    first = first.next;\n  }\n  \n  while (first) {\n    first = first.next;\n    second = second.next;\n  }\n  \n  second.next = second.next.next;\n  \n  return dummy.next;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Palindrome Linked List",
+    "description": "Check if a linked list is a palindrome.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Reverse second half",
+        "code": "public class PalindromeList {\n  public static boolean isPalindrome(ListNode head) {\n    if (head == null || head.next == null) return true;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast.next != null && fast.next.next != null) {\n      slow = slow.next;\n      fast = fast.next.next;\n    }\n    \n    slow.next = reverse(slow.next);\n    slow = slow.next;\n    \n    ListNode current = head;\n    while (slow != null) {\n      if (current.val != slow.val) return false;\n      current = current.next;\n      slow = slow.next;\n    }\n    \n    return true;\n  }\n  \n  private static ListNode reverse(ListNode head) {\n    ListNode prev = null;\n    while (head != null) {\n      ListNode next = head.next;\n      head.next = prev;\n      prev = head;\n      head = next;\n    }\n    return prev;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "Array conversion",
+        "code": "import java.util.ArrayList;\n\npublic class PalindromeList {\n  public static boolean isPalindrome(ListNode head) {\n    ArrayList<Integer> vals = new ArrayList<>();\n    \n    while (head != null) {\n      vals.add(head.val);\n      head = head.next;\n    }\n    \n    int left = 0, right = vals.size() - 1;\n    while (left < right) {\n      if (!vals.get(left).equals(vals.get(right))) {\n        return false;\n      }\n      left++;\n      right--;\n    }\n    \n    return true;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Array conversion",
+        "code": "function isPalindrome(head) {\n  let vals = [];\n  \n  while (head) {\n    vals.push(head.val);\n    head = head.next;\n  }\n  \n  let left = 0, right = vals.length - 1;\n  while (left < right) {\n    if (vals[left] !== vals[right]) {\n      return false;\n    }\n    left++;\n    right--;\n  }\n  \n  return true;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Intersection of Two Linked Lists",
+    "description": "Find the node where two linked lists intersect.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Two pointers",
+        "code": "public class IntersectionTwoLists {\n  public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {\n    if (headA == null || headB == null) return null;\n    \n    ListNode pointerA = headA;\n    ListNode pointerB = headB;\n    \n    while (pointerA != pointerB) {\n      pointerA = pointerA == null ? headB : pointerA.next;\n      pointerB = pointerB == null ? headA : pointerB.next;\n    }\n    \n    return pointerA;\n  }\n}"
+      },
+      {
+        "language": "java",
+        "approach": "HashSet",
+        "code": "import java.util.HashSet;\n\npublic class IntersectionTwoLists {\n  public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {\n    HashSet<ListNode> nodesInA = new HashSet<>();\n    \n    while (headA != null) {\n      nodesInA.add(headA);\n      headA = headA.next;\n    }\n    \n    while (headB != null) {\n      if (nodesInA.contains(headB)) {\n        return headB;\n      }\n      headB = headB.next;\n    }\n    \n    return null;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Two pointers",
+        "code": "function getIntersectionNode(headA, headB) {\n  if (!headA || !headB) return null;\n  \n  let pointerA = headA;\n  let pointerB = headB;\n  \n  while (pointerA !== pointerB) {\n    pointerA = pointerA ? pointerA.next : headB;\n    pointerB = pointerB ? pointerB.next : headA;\n  }\n  \n  return pointerA;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Remove Duplicates from Sorted List",
+    "description": "Remove duplicates from a sorted linked list.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Single pass",
+        "code": "public class RemoveDuplicates {\n  public static ListNode deleteDuplicates(ListNode head) {\n    if (head == null) return null;\n    \n    ListNode current = head;\n    \n    while (current.next != null) {\n      if (current.val == current.next.val) {\n        current.next = current.next.next;\n      } else {\n        current = current.next;\n      }\n    }\n    \n    return head;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Single pass",
+        "code": "function deleteDuplicates(head) {\n  if (!head) return null;\n  \n  let current = head;\n  \n  while (current.next) {\n    if (current.val === current.next.val) {\n      current.next = current.next.next;\n    } else {\n      current = current.next;\n    }\n  }\n  \n  return head;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Add Two Numbers",
+    "description": "Add two numbers represented as linked lists.",
+    "solutions": [
+      {
+        "language": "java",
+        "approach": "Simulation",
+        "code": "public class AddTwoNumbers {\n  public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    int carry = 0;\n    \n    while (l1 != null || l2 != null || carry != 0) {\n      int sum = carry;\n      \n      if (l1 != null) {\n        sum += l1.val;\n        l1 = l1.next;\n      }\n      \n      if (l2 != null) {\n        sum += l2.val;\n        l2 = l2.next;\n      }\n      \n      carry = sum / 10;\n      current.next = new ListNode(sum % 10);\n      current = current.next;\n    }\n    \n    return dummy.next;\n  }\n}"
+      },
+      {
+        "language": "javascript",
+        "approach": "Simulation",
+        "code": "function addTwoNumbers(l1, l2) {\n  let dummy = new ListNode(0);\n  let current = dummy;\n  let carry = 0;\n  \n  while (l1 || l2 || carry) {\n    let sum = carry;\n    \n    if (l1) {\n      sum += l1.val;\n      l1 = l1.next;\n    }\n    \n    if (l2) {\n      sum += l2.val;\n      l2 = l2.next;\n    }\n    \n    carry = Math.floor(sum / 10);\n    current.next = new ListNode(sum % 10);\n    current = current.next;\n  }\n  \n  return dummy.next;\n}"
+      }
+    ]
+  }
+]

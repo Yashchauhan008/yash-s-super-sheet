@@ -1,0 +1,15 @@
+[
+    {
+      "title": "Basic Encapsulation in Java",
+      "description": "This example shows a simple 'Person' class in Java. The 'name' and 'age' fields are private, meaning they can only be accessed through public getter and setter methods. This prevents direct, uncontrolled access to the data.",
+      "language": "java",
+      "code": "public class Person {\n    // Private variables, hidden from other classes\n    private String name;\n    private int age;\n\n    // Public getter method for name\n    public String getName() {\n        return name;\n    }\n\n    // Public setter method for name\n    public void setName(String name) {\n        this.name = name;\n    }\n\n    // Public getter method for age\n    public int getAge() {\n        return age;\n    }\n\n    // Public setter method for age\n    public void setAge(int age) {\n        if (age > 0) { // Basic validation\n            this.age = age;\n        }\n    }\n}"
+    },
+    {
+      "title": "Encapsulation in Python",
+      "description": "Python uses a convention of prefixing attribute names with an underscore (e.g., _name) to indicate they are 'protected' and intended for internal use. While not strictly enforced like Java's 'private', it's a strong convention followed by developers.",
+      "language": "python",
+      "code": "class Car:\n    def __init__(self, make, model):\n        self._make = make  # Protected attribute\n        self._model = model # Protected attribute\n        self._is_running = False\n\n    def start_engine(self):\n        if not self._is_running:\n            self._is_running = True\n            print(f\"The {self._make} {self._model}'s engine is now running.\")\n\n    def get_status(self):\n        return 'Running' if self._is_running else 'Off'"
+    }
+  ]
+  

@@ -1,0 +1,251 @@
+[
+    {
+      "title": "Stack Implementation",
+      "description": "Basic stack implementation with common operations using array and linked list.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Array-based implementation",
+          "code": "import java.util.Scanner;\n\nclass Stack {\n    private int[] arr;\n    private int top;\n    private int capacity;\n\n    Stack(int size) {\n        arr = new int[size];\n        capacity = size;\n        top = -1;\n    }\n\n    // Push element\n    void push(int data) {\n        if (isFull()) {\n            System.out.println(\"Stack overflow\");\n            return;\n        }\n        arr[++top] = data;\n    }\n\n    // Pop element\n    int pop() {\n        if (isEmpty()) {\n            System.out.println(\"Stack underflow\");\n            return -1;\n        }\n        return arr[top--];\n    }\n\n    // Peek top element\n    int peek() {\n        if (isEmpty()) {\n            System.out.println(\"Stack is empty\");\n            return -1;\n        }\n        return arr[top];\n    }\n\n    // Check if empty\n    boolean isEmpty() {\n        return top == -1;\n    }\n\n    // Check if full\n    boolean isFull() {\n        return top == capacity - 1;\n    }\n\n    // Display stack\n    void display() {\n        if (isEmpty()) {\n            System.out.println(\"Stack is empty\");\n            return;\n        }\n        System.out.print(\"Stack: \");\n        for (int i = top; i >= 0; i--) {\n            System.out.print(arr[i] + \" \");\n        }\n        System.out.println();\n    }\n}\n\npublic class StackArray {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        System.out.print(\"Enter stack size: \");\n        int size = sc.nextInt();\n        Stack stack = new Stack(size);\n        int choice, value;\n\n        do {\n            System.out.println(\"\\n=== STACK MENU ===\");\n            System.out.println(\"1. Push\");\n            System.out.println(\"2. Pop\");\n            System.out.println(\"3. Peek\");\n            System.out.println(\"4. Display\");\n            System.out.println(\"0. Exit\");\n            System.out.print(\"Enter choice: \");\n            choice = sc.nextInt();\n\n            switch (choice) {\n                case 1:\n                    System.out.print(\"Enter value to push: \");\n                    value = sc.nextInt();\n                    stack.push(value);\n                    break;\n                case 2:\n                    value = stack.pop();\n                    if (value != -1) {\n                        System.out.println(\"Popped: \" + value);\n                    }\n                    break;\n                case 3:\n                    value = stack.peek();\n                    if (value != -1) {\n                        System.out.println(\"Top: \" + value);\n                    }\n                    break;\n                case 4:\n                    stack.display();\n                    break;\n                case 0:\n                    System.out.println(\"Exiting...\");\n                    break;\n                default:\n                    System.out.println(\"Invalid choice\");\n            }\n        } while (choice != 0);\n        sc.close();\n    }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Linked List implementation",
+          "code": "class Node {\n    int data;\n    Node next;\n    \n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\n\nclass StackLinkedList {\n    private Node top;\n    \n    StackLinkedList() {\n        top = null;\n    }\n    \n    void push(int data) {\n        Node newNode = new Node(data);\n        newNode.next = top;\n        top = newNode;\n    }\n    \n    int pop() {\n        if (isEmpty()) {\n            System.out.println(\"Stack underflow\");\n            return -1;\n        }\n        int data = top.data;\n        top = top.next;\n        return data;\n    }\n    \n    int peek() {\n        if (isEmpty()) {\n            System.out.println(\"Stack is empty\");\n            return -1;\n        }\n        return top.data;\n    }\n    \n    boolean isEmpty() {\n        return top == null;\n    }\n    \n    void display() {\n        if (isEmpty()) {\n            System.out.println(\"Stack is empty\");\n            return;\n        }\n        Node temp = top;\n        System.out.print(\"Stack: \");\n        while (temp != null) {\n            System.out.print(temp.data + \" \");\n            temp = temp.next;\n        }\n        System.out.println();\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Array-based implementation",
+          "code": "class Stack {\n  constructor() {\n    this.items = [];\n  }\n  \n  push(element) {\n    this.items.push(element);\n  }\n  \n  pop() {\n    if (this.isEmpty()) {\n      return null;\n    }\n    return this.items.pop();\n  }\n  \n  peek() {\n    if (this.isEmpty()) {\n      return null;\n    }\n    return this.items[this.items.length - 1];\n  }\n  \n  isEmpty() {\n    return this.items.length === 0;\n  }\n  \n  size() {\n    return this.items.length;\n  }\n  \n  display() {\n    console.log(this.items.slice().reverse().join(' '));\n  }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Queue Implementation",
+      "description": "Basic queue implementation with common operations using array and linked list.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Array-based implementation",
+          "code": "import java.util.Scanner;\n\nclass Queue {\n    private int[] arr;\n    private int front;\n    private int rear;\n    private int capacity;\n    private int size;\n\n    Queue(int capacity) {\n        this.capacity = capacity;\n        arr = new int[capacity];\n        front = 0;\n        rear = -1;\n        size = 0;\n    }\n\n    // Enqueue element\n    void enqueue(int data) {\n        if (isFull()) {\n            System.out.println(\"Queue overflow\");\n            return;\n        }\n        rear = (rear + 1) % capacity;\n        arr[rear] = data;\n        size++;\n    }\n\n    // Dequeue element\n    int dequeue() {\n        if (isEmpty()) {\n            System.out.println(\"Queue underflow\");\n            return -1;\n        }\n        int data = arr[front];\n        front = (front + 1) % capacity;\n        size--;\n        return data;\n    }\n\n    // Peek front element\n    int peek() {\n        if (isEmpty()) {\n            System.out.println(\"Queue is empty\");\n            return -1;\n        }\n        return arr[front];\n    }\n\n    // Check if empty\n    boolean isEmpty() {\n        return size == 0;\n    }\n\n    // Check if full\n    boolean isFull() {\n        return size == capacity;\n    }\n\n    // Display queue\n    void display() {\n        if (isEmpty()) {\n            System.out.println(\"Queue is empty\");\n            return;\n        }\n        System.out.print(\"Queue: \");\n        for (int i = 0; i < size; i++) {\n            System.out.print(arr[(front + i) % capacity] + \" \");\n        }\n        System.out.println();\n    }\n}\n\npublic class QueueArray {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        System.out.print(\"Enter queue size: \");\n        int size = sc.nextInt();\n        Queue queue = new Queue(size);\n        int choice, value;\n\n        do {\n            System.out.println(\"\\n=== QUEUE MENU ===\");\n            System.out.println(\"1. Enqueue\");\n            System.out.println(\"2. Dequeue\");\n            System.out.println(\"3. Peek\");\n            System.out.println(\"4. Display\");\n            System.out.println(\"0. Exit\");\n            System.out.print(\"Enter choice: \");\n            choice = sc.nextInt();\n\n            switch (choice) {\n                case 1:\n                    System.out.print(\"Enter value to enqueue: \");\n                    value = sc.nextInt();\n                    queue.enqueue(value);\n                    break;\n                case 2:\n                    value = queue.dequeue();\n                    if (value != -1) {\n                        System.out.println(\"Dequeued: \" + value);\n                    }\n                    break;\n                case 3:\n                    value = queue.peek();\n                    if (value != -1) {\n                        System.out.println(\"Front: \" + value);\n                    }\n                    break;\n                case 4:\n                    queue.display();\n                    break;\n                case 0:\n                    System.out.println(\"Exiting...\");\n                    break;\n                default:\n                    System.out.println(\"Invalid choice\");\n            }\n        } while (choice != 0);\n        sc.close();\n    }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Linked List implementation",
+          "code": "class Node {\n    int data;\n    Node next;\n    \n    Node(int data) {\n        this.data = data;\n        this.next = null;\n    }\n}\n\nclass QueueLinkedList {\n    private Node front;\n    private Node rear;\n    \n    QueueLinkedList() {\n        front = null;\n        rear = null;\n    }\n    \n    void enqueue(int data) {\n        Node newNode = new Node(data);\n        if (rear == null) {\n            front = rear = newNode;\n            return;\n        }\n        rear.next = newNode;\n        rear = newNode;\n    }\n    \n    int dequeue() {\n        if (isEmpty()) {\n            System.out.println(\"Queue underflow\");\n            return -1;\n        }\n        int data = front.data;\n        front = front.next;\n        if (front == null) {\n            rear = null;\n        }\n        return data;\n    }\n    \n    int peek() {\n        if (isEmpty()) {\n            System.out.println(\"Queue is empty\");\n            return -1;\n        }\n        return front.data;\n    }\n    \n    boolean isEmpty() {\n        return front == null;\n    }\n    \n    void display() {\n        if (isEmpty()) {\n            System.out.println(\"Queue is empty\");\n            return;\n        }\n        Node temp = front;\n        System.out.print(\"Queue: \");\n        while (temp != null) {\n            System.out.print(temp.data + \" \");\n            temp = temp.next;\n        }\n        System.out.println();\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Array-based implementation",
+          "code": "class Queue {\n  constructor() {\n    this.items = [];\n  }\n  \n  enqueue(element) {\n    this.items.push(element);\n  }\n  \n  dequeue() {\n    if (this.isEmpty()) {\n      return null;\n    }\n    return this.items.shift();\n  }\n  \n  peek() {\n    if (this.isEmpty()) {\n      return null;\n    }\n    return this.items[0];\n  }\n  \n  isEmpty() {\n    return this.items.length === 0;\n  }\n  \n  size() {\n    return this.items.length;\n  }\n  \n  display() {\n    console.log(this.items.join(' '));\n  }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Valid Parentheses",
+      "description": "Check if parentheses are balanced using a stack.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack-based",
+          "code": "import java.util.Stack;\n\npublic class ValidParentheses {\n    public static boolean isValid(String s) {\n        Stack<Character> stack = new Stack<>();\n        \n        for (char c : s.toCharArray()) {\n            if (c == '(' || c == '{' || c == '[') {\n                stack.push(c);\n            } else if (c == ')' || c == '}' || c == ']') {\n                if (stack.isEmpty()) {\n                    return false;\n                }\n                char top = stack.pop();\n                if ((c == ')' && top != '(') ||\n                    (c == '}' && top != '{') ||\n                    (c == ']' && top != '[')) {\n                    return false;\n                }\n            }\n        }\n        \n        return stack.isEmpty();\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack-based",
+          "code": "function isValid(s) {\n    const stack = [];\n    const map = {\n        ')': '(',\n        '}': '{',\n        ']': '['\n    };\n    \n    for (let char of s) {\n        if (char === '(' || char === '{' || char === '[') {\n            stack.push(char);\n        } else if (char === ')' || char === '}' || char === ']') {\n            if (stack.length === 0 || stack.pop() !== map[char]) {\n                return false;\n            }\n        }\n    }\n    \n    return stack.length === 0;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Implement Queue using Stacks",
+      "description": "Implement a queue using two stacks.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two stacks",
+          "code": "import java.util.Stack;\n\nclass MyQueue {\n    private Stack<Integer> stack1;\n    private Stack<Integer> stack2;\n    \n    public MyQueue() {\n        stack1 = new Stack<>();\n        stack2 = new Stack<>();\n    }\n    \n    public void push(int x) {\n        stack1.push(x);\n    }\n    \n    public int pop() {\n        if (stack2.isEmpty()) {\n            while (!stack1.isEmpty()) {\n                stack2.push(stack1.pop());\n            }\n        }\n        return stack2.pop();\n    }\n    \n    public int peek() {\n        if (stack2.isEmpty()) {\n            while (!stack1.isEmpty()) {\n                stack2.push(stack1.pop());\n            }\n        }\n        return stack2.peek();\n    }\n    \n    public boolean empty() {\n        return stack1.isEmpty() && stack2.isEmpty();\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Two stacks",
+          "code": "class MyQueue {\n    constructor() {\n        this.stack1 = [];\n        this.stack2 = [];\n    }\n    \n    push(x) {\n        this.stack1.push(x);\n    }\n    \n    pop() {\n        if (this.stack2.length === 0) {\n            while (this.stack1.length > 0) {\n                this.stack2.push(this.stack1.pop());\n            }\n        }\n        return this.stack2.pop();\n    }\n    \n    peek() {\n        if (this.stack2.length === 0) {\n            while (this.stack1.length > 0) {\n                this.stack2.push(this.stack1.pop());\n            }\n        }\n        return this.stack2[this.stack2.length - 1];\n    }\n    \n    empty() {\n        return this.stack1.length === 0 && this.stack2.length === 0;\n    }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Implement Stack using Queues",
+      "description": "Implement a stack using one or two queues.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two queues",
+          "code": "import java.util.LinkedList;\nimport java.util.Queue;\n\nclass MyStack {\n    private Queue<Integer> queue1;\n    private Queue<Integer> queue2;\n    \n    public MyStack() {\n        queue1 = new LinkedList<>();\n        queue2 = new LinkedList<>();\n    }\n    \n    public void push(int x) {\n        queue2.offer(x);\n        while (!queue1.isEmpty()) {\n            queue2.offer(queue1.poll());\n        }\n        Queue<Integer> temp = queue1;\n        queue1 = queue2;\n        queue2 = temp;\n    }\n    \n    public int pop() {\n        return queue1.poll();\n    }\n    \n    public int top() {\n        return queue1.peek();\n    }\n    \n    public boolean empty() {\n        return queue1.isEmpty();\n    }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "One queue",
+          "code": "import java.util.LinkedList;\nimport java.util.Queue;\n\nclass MyStack {\n    private Queue<Integer> queue;\n    \n    public MyStack() {\n        queue = new LinkedList<>();\n    }\n    \n    public void push(int x) {\n        queue.offer(x);\n        int size = queue.size();\n        for (int i = 1; i < size; i++) {\n            queue.offer(queue.poll());\n        }\n    }\n    \n    public int pop() {\n        return queue.poll();\n    }\n    \n    public int top() {\n        return queue.peek();\n    }\n    \n    public boolean empty() {\n        return queue.isEmpty();\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "One queue",
+          "code": "class MyStack {\n    constructor() {\n        this.queue = [];\n    }\n    \n    push(x) {\n        this.queue.push(x);\n        let size = this.queue.length;\n        for (let i = 1; i < size; i++) {\n            this.queue.push(this.queue.shift());\n        }\n    }\n    \n    pop() {\n        return this.queue.shift();\n    }\n    \n    top() {\n        return this.queue[0];\n    }\n    \n    empty() {\n        return this.queue.length === 0;\n    }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Evaluate Reverse Polish Notation",
+      "description": "Evaluate an expression in Reverse Polish Notation using a stack.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack-based",
+          "code": "import java.util.Stack;\n\npublic class EvalRPN {\n    public static int evalRPN(String[] tokens) {\n        Stack<Integer> stack = new Stack<>();\n        \n        for (String token : tokens) {\n            if (token.equals(\"+\")) {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(a + b);\n            } else if (token.equals(\"-\")) {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(a - b);\n            } else if (token.equals(\"*\")) {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(a * b);\n            } else if (token.equals(\"/\")) {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(a / b);\n            } else {\n                stack.push(Integer.parseInt(token));\n            }\n        }\n        \n        return stack.pop();\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack-based",
+          "code": "function evalRPN(tokens) {\n    const stack = [];\n    \n    for (let token of tokens) {\n        if (token === '+') {\n            const b = stack.pop();\n            const a = stack.pop();\n            stack.push(a + b);\n        } else if (token === '-') {\n            const b = stack.pop();\n            const a = stack.pop();\n            stack.push(a - b);\n        } else if (token === '*') {\n            const b = stack.pop();\n            const a = stack.pop();\n            stack.push(a * b);\n        } else if (token === '/') {\n            const b = stack.pop();\n            const a = stack.pop();\n            stack.push(Math.trunc(a / b));\n        } else {\n            stack.push(parseInt(token));\n        }\n    }\n    \n    return stack.pop();\n}"
+        }
+      ]
+    },
+    {
+      "title": "Next Greater Element",
+      "description": "Find the next greater element for each element in an array using a stack.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack-based",
+          "code": "import java.util.*;\n\npublic class NextGreaterElement {\n    public static int[] nextGreaterElement(int[] nums) {\n        int n = nums.length;\n        int[] result = new int[n];\n        Stack<Integer> stack = new Stack<>();\n        \n        for (int i = n - 1; i >= 0; i--) {\n            while (!stack.isEmpty() && stack.peek() <= nums[i]) {\n                stack.pop();\n            }\n            \n            result[i] = stack.isEmpty() ? -1 : stack.peek();\n            stack.push(nums[i]);\n        }\n        \n        return result;\n    }\n    \n    public static void main(String[] args) {\n        int[] nums = {2, 1, 2, 4, 3, 1};\n        int[] result = nextGreaterElement(nums);\n        System.out.println(Arrays.toString(result));\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack-based",
+          "code": "function nextGreaterElement(nums) {\n    const result = new Array(nums.length);\n    const stack = [];\n    \n    for (let i = nums.length - 1; i >= 0; i--) {\n        while (stack.length > 0 && stack[stack.length - 1] <= nums[i]) {\n            stack.pop();\n        }\n        \n        result[i] = stack.length === 0 ? -1 : stack[stack.length - 1];\n        stack.push(nums[i]);\n    }\n    \n    return result;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Sliding Window Maximum",
+      "description": "Find the maximum element in each sliding window using a deque.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Deque-based",
+          "code": "import java.util.*;\n\npublic class SlidingWindowMaximum {\n    public static int[] maxSlidingWindow(int[] nums, int k) {\n        if (nums == null || nums.length == 0) {\n            return new int[0];\n        }\n        \n        int n = nums.length;\n        int[] result = new int[n - k + 1];\n        Deque<Integer> deque = new LinkedList<>();\n        \n        for (int i = 0; i < n; i++) {\n            // Remove elements outside current window\n            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {\n                deque.pollFirst();\n            }\n            \n            // Remove smaller elements from rear\n            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) {\n                deque.pollLast();\n            }\n            \n            deque.offerLast(i);\n            \n            // Add to result if window is complete\n            if (i >= k - 1) {\n                result[i - k + 1] = nums[deque.peekFirst()];\n            }\n        }\n        \n        return result;\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Deque-based",
+          "code": "function maxSlidingWindow(nums, k) {\n    if (!nums || nums.length === 0) {\n        return [];\n    }\n    \n    const result = [];\n    const deque = [];\n    \n    for (let i = 0; i < nums.length; i++) {\n        // Remove elements outside current window\n        while (deque.length > 0 && deque[0] < i - k + 1) {\n            deque.shift();\n        }\n        \n        // Remove smaller elements from rear\n        while (deque.length > 0 && nums[deque[deque.length - 1]] <= nums[i]) {\n            deque.pop();\n        }\n        \n        deque.push(i);\n        \n        // Add to result if window is complete\n        if (i >= k - 1) {\n            result.push(nums[deque[0]]);\n        }\n    }\n    \n    return result;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Min Stack",
+      "description": "Design a stack that supports push, pop, top, and getMin operations in O(1) time.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two stacks",
+          "code": "import java.util.Stack;\n\nclass MinStack {\n    private Stack<Integer> stack;\n    private Stack<Integer> minStack;\n    \n    public MinStack() {\n        stack = new Stack<>();\n        minStack = new Stack<>();\n    }\n    \n    public void push(int val) {\n        stack.push(val);\n        if (minStack.isEmpty() || val <= minStack.peek()) {\n            minStack.push(val);\n        }\n    }\n    \n    public void pop() {\n        if (stack.peek().equals(minStack.peek())) {\n            minStack.pop();\n        }\n        stack.pop();\n    }\n    \n    public int top() {\n        return stack.peek();\n    }\n    \n    public int getMin() {\n        return minStack.peek();\n    }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Single stack with pairs",
+          "code": "import java.util.Stack;\n\nclass MinStack {\n    private Stack<int[]> stack;\n    \n    public MinStack() {\n        stack = new Stack<>();\n    }\n    \n    public void push(int val) {\n        if (stack.isEmpty()) {\n            stack.push(new int[]{val, val});\n        } else {\n            int currentMin = Math.min(val, stack.peek()[1]);\n            stack.push(new int[]{val, currentMin});\n        }\n    }\n    \n    public void pop() {\n        stack.pop();\n    }\n    \n    public int top() {\n        return stack.peek()[0];\n    }\n    \n    public int getMin() {\n        return stack.peek()[1];\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Two stacks",
+          "code": "class MinStack {\n    constructor() {\n        this.stack = [];\n        this.minStack = [];\n    }\n    \n    push(val) {\n        this.stack.push(val);\n        if (this.minStack.length === 0 || val <= this.minStack[this.minStack.length - 1]) {\n            this.minStack.push(val);\n        }\n    }\n    \n    pop() {\n        if (this.stack.pop() === this.minStack[this.minStack.length - 1]) {\n            this.minStack.pop();\n        }\n    }\n    \n    top() {\n        return this.stack[this.stack.length - 1];\n    }\n    \n    getMin() {\n        return this.minStack[this.minStack.length - 1];\n    }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Daily Temperatures",
+      "description": "Find the number of days until a warmer temperature using a stack.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack with indices",
+          "code": "import java.util.*;\n\npublic class DailyTemperatures {\n    public static int[] dailyTemperatures(int[] temperatures) {\n        int n = temperatures.length;\n        int[] result = new int[n];\n        Stack<Integer> stack = new Stack<>();\n        \n        for (int i = 0; i < n; i++) {\n            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {\n                int index = stack.pop();\n                result[index] = i - index;\n            }\n            stack.push(i);\n        }\n        \n        return result;\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack with indices",
+          "code": "function dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {\n            const index = stack.pop();\n            result[index] = i - index;\n        }\n        stack.push(i);\n    }\n    \n    return result;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Trapping Rain Water",
+      "description": "Calculate how much water can be trapped after raining using a stack.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack-based",
+          "code": "import java.util.Stack;\n\npublic class TrappingRainWater {\n    public static int trap(int[] height) {\n        if (height == null || height.length == 0) {\n            return 0;\n        }\n        \n        Stack<Integer> stack = new Stack<>();\n        int water = 0;\n        \n        for (int i = 0; i < height.length; i++) {\n            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {\n                int top = stack.pop();\n                if (stack.isEmpty()) {\n                    break;\n                }\n                int distance = i - stack.peek() - 1;\n                int boundedHeight = Math.min(height[i], height[stack.peek()]) - height[top];\n                water += distance * boundedHeight;\n            }\n            stack.push(i);\n        }\n        \n        return water;\n    }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Two pointers",
+          "code": "public class TrappingRainWater {\n    public static int trap(int[] height) {\n        if (height == null || height.length == 0) {\n            return 0;\n        }\n        \n        int left = 0, right = height.length - 1;\n        int leftMax = 0, rightMax = 0;\n        int water = 0;\n        \n        while (left < right) {\n            if (height[left] < height[right]) {\n                if (height[left] >= leftMax) {\n                    leftMax = height[left];\n                } else {\n                    water += leftMax - height[left];\n                }\n                left++;\n            } else {\n                if (height[right] >= rightMax) {\n                    rightMax = height[right];\n                } else {\n                    water += rightMax - height[right];\n                }\n                right--;\n            }\n        }\n        \n        return water;\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack-based",
+          "code": "function trap(height) {\n    if (!height || height.length === 0) {\n        return 0;\n    }\n    \n    const stack = [];\n    let water = 0;\n    \n    for (let i = 0; i < height.length; i++) {\n        while (stack.length > 0 && height[i] > height[stack[stack.length - 1]]) {\n            const top = stack.pop();\n            if (stack.length === 0) {\n                break;\n            }\n            const distance = i - stack[stack.length - 1] - 1;\n            const boundedHeight = Math.min(height[i], height[stack[stack.length - 1]]) - height[top];\n            water += distance * boundedHeight;\n        }\n        stack.push(i);\n    }\n    \n    return water;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Largest Rectangle in Histogram",
+      "description": "Find the largest rectangle area in a histogram using a stack.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack-based",
+          "code": "import java.util.Stack;\n\npublic class LargestRectangle {\n    public static int largestRectangleArea(int[] heights) {\n        Stack<Integer> stack = new Stack<>();\n        int maxArea = 0;\n        \n        for (int i = 0; i <= heights.length; i++) {\n            int currentHeight = (i == heights.length) ? 0 : heights[i];\n            \n            while (!stack.isEmpty() && currentHeight < heights[stack.peek()]) {\n                int height = heights[stack.pop()];\n                int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n                maxArea = Math.max(maxArea, height * width);\n            }\n            \n            stack.push(i);\n        }\n        \n        return maxArea;\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack-based",
+          "code": "function largestRectangleArea(heights) {\n    const stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        const currentHeight = (i === heights.length) ? 0 : heights[i];\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n            const height = heights[stack.pop()];\n            const width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;\n            maxArea = Math.max(maxArea, height * width);\n        }\n        \n        stack.push(i);\n    }\n    \n    return maxArea;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Binary Tree Level Order Traversal",
+      "description": "Traverse a binary tree level by level using a queue.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "BFS with queue",
+          "code": "import java.util.*;\n\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n\npublic class LevelOrderTraversal {\n    public static List<List<Integer>> levelOrder(TreeNode root) {\n        List<List<Integer>> result = new ArrayList<>();\n        if (root == null) {\n            return result;\n        }\n        \n        Queue<TreeNode> queue = new LinkedList<>();\n        queue.offer(root);\n        \n        while (!queue.isEmpty()) {\n            int levelSize = queue.size();\n            List<Integer> currentLevel = new ArrayList<>();\n            \n            for (int i = 0; i < levelSize; i++) {\n                TreeNode node = queue.poll();\n                currentLevel.add(node.val);\n                \n                if (node.left != null) {\n                    queue.offer(node.left);\n                }\n                if (node.right != null) {\n                    queue.offer(node.right);\n                }\n            }\n            \n            result.add(currentLevel);\n        }\n        \n        return result;\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "BFS with queue",
+          "code": "function levelOrder(root) {\n    if (!root) return [];\n    \n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n            const node = queue.shift();\n            currentLevel.push(node.val);\n            \n            if (node.left) {\n                queue.push(node.left);\n            }\n            if (node.right) {\n                queue.push(node.right);\n            }\n        }\n        \n        result.push(currentLevel);\n    }\n    \n    return result;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Rotting Oranges",
+      "description": "Find the minimum time to rot all oranges using BFS with a queue.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "BFS multi-source",
+          "code": "import java.util.*;\n\npublic class RottingOranges {\n    public static int orangesRotting(int[][] grid) {\n        if (grid == null || grid.length == 0) {\n            return 0;\n        }\n        \n        int rows = grid.length;\n        int cols = grid[0].length;\n        Queue<int[]> queue = new LinkedList<>();\n        int fresh = 0;\n        \n        // Find all rotten oranges and count fresh ones\n        for (int i = 0; i < rows; i++) {\n            for (int j = 0; j < cols; j++) {\n                if (grid[i][j] == 2) {\n                    queue.offer(new int[]{i, j});\n                } else if (grid[i][j] == 1) {\n                    fresh++;\n                }\n            }\n        }\n        \n        if (fresh == 0) {\n            return 0;\n        }\n        \n        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};\n        int minutes = 0;\n        \n        while (!queue.isEmpty() && fresh > 0) {\n            int size = queue.size();\n            \n            for (int i = 0; i < size; i++) {\n                int[] current = queue.poll();\n                \n                for (int[] dir : directions) {\n                    int newRow = current[0] + dir[0];\n                    int newCol = current[1] + dir[1];\n                    \n                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && grid[newRow][newCol] == 1) {\n                        grid[newRow][newCol] = 2;\n                        queue.offer(new int[]{newRow, newCol});\n                        fresh--;\n                    }\n                }\n            }\n            \n            minutes++;\n        }\n        \n        return fresh == 0 ? minutes : -1;\n    }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "BFS multi-source",
+          "code": "function orangesRotting(grid) {\n    if (!grid || grid.length === 0) {\n        return 0;\n    }\n    \n    const rows = grid.length;\n    const cols = grid[0].length;\n    const queue = [];\n    let fresh = 0;\n    \n    // Find all rotten oranges and count fresh ones\n    for (let i = 0; i < rows; i++) {\n        for (let j = 0; j < cols; j++) {\n            if (grid[i][j] === 2) {\n                queue.push([i, j]);\n            } else if (grid[i][j] === 1) {\n                fresh++;\n            }\n        }\n    }\n    \n    if (fresh === 0) {\n        return 0;\n    }\n    \n    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];\n    let minutes = 0;\n    \n    while (queue.length > 0 && fresh > 0) {\n        const size = queue.length;\n        \n        for (let i = 0; i < size; i++) {\n            const [row, col] = queue.shift();\n            \n            for (const [dr, dc] of directions) {\n                const newRow = row + dr;\n                const newCol = col + dc;\n                \n                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && grid[newRow][newCol] === 1) {\n                    grid[newRow][newCol] = 2;\n                    queue.push([newRow, newCol]);\n                    fresh--;\n                }\n            }\n        }\n        \n        minutes++;\n    }\n    \n    return fresh === 0 ? minutes : -1;\n}"
+        }
+      ]
+    }
+  ]

@@ -1,0 +1,314 @@
+[
+    {
+      "title": "Reverse a String",
+      "description": "Reverse a given string using language-specific methods.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Built-in method",
+          "code": "public class ReverseString {\n  public static String reverse(String str) {\n    return new StringBuilder(str).reverse().toString();\n  }\n\n  public static void main(String[] args) {\n    System.out.println(reverse(\"hello world\")); // Output: dlrow olleh\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Manual (two pointers)",
+          "code": "public class ReverseString {\n  public static String reverse(String str) {\n    char[] chars = str.toCharArray();\n    int left = 0, right = chars.length - 1;\n    while (left < right) {\n      char temp = chars[left];\n      chars[left] = chars[right];\n      chars[right] = temp;\n      left++;\n      right--;\n    }\n    return new String(chars);\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Built-in method",
+          "code": "let str = \"hello world\";\nlet reversed = str.split('').reverse().join('');\nconsole.log(reversed); // Output: 'dlrow olleh'"
+        },
+        {
+          "language": "javascript",
+          "approach": "Manual (loop)",
+          "code": "function reverseString(str) {\n  let result = '';\n  for (let i = str.length - 1; i >= 0; i--) {\n    result += str[i];\n  }\n  return result;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Check Palindrome",
+      "description": "Check if a given string is a palindrome using two pointers.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two pointers",
+          "code": "public class PalindromeCheck {\n  public static boolean isPalindrome(String str) {\n    int left = 0, right = str.length() - 1;\n    while (left < right) {\n      if (str.charAt(left) != str.charAt(right)) return false;\n      left++;\n      right--;\n    }\n    return true;\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Built-in method",
+          "code": "public class PalindromeCheck {\n  public static boolean isPalindrome(String str) {\n    String reversed = new StringBuilder(str).reverse().toString();\n    return str.equals(reversed);\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Two pointers",
+          "code": "function isPalindrome(str) {\n  let left = 0, right = str.length - 1;\n  while (left < right) {\n    if (str[left] !== str[right]) return false;\n    left++;\n    right--;\n  }\n  return true;\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Built-in method",
+          "code": "function isPalindrome(str) {\n  return str === str.split('').reverse().join('');\n}"
+        }
+      ]
+    },
+    {
+      "title": "Maximum Subarray Sum (Kadane's Algorithm)",
+      "description": "Find the maximum sum subarray using Kadane's algorithm.",
+      "solutions": [
+        {
+          "language": "java",
+          "code": "public class MaxSubArray {\n  public static int maxSubArray(int[] nums) {\n    int maxSoFar = nums[0], currMax = nums[0];\n    for (int i = 1; i < nums.length; i++) {\n      currMax = Math.max(nums[i], currMax + nums[i]);\n      maxSoFar = Math.max(maxSoFar, currMax);\n    }\n    return maxSoFar;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "code": "function maxSubArray(arr) {\n  let maxSoFar = arr[0], currMax = arr[0];\n  for (let i = 1; i < arr.length; i++) {\n    currMax = Math.max(arr[i], currMax + arr[i]);\n    maxSoFar = Math.max(maxSoFar, currMax);\n  }\n  return maxSoFar;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Anagram Check",
+      "description": "Determine if two strings are anagrams of each other.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Sorting",
+          "code": "import java.util.Arrays;\n\npublic class AnagramCheck {\n  public static boolean isAnagram(String s1, String s2) {\n    if (s1.length() != s2.length()) return false;\n    char[] a = s1.toCharArray();\n    char[] b = s2.toCharArray();\n    Arrays.sort(a);\n    Arrays.sort(b);\n    return Arrays.equals(a, b);\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Character counting",
+          "code": "public class AnagramCheck {\n  public static boolean isAnagram(String s1, String s2) {\n    if (s1.length() != s2.length()) return false;\n    int[] count = new int[26];\n    for (int i = 0; i < s1.length(); i++) {\n      count[s1.charAt(i) - 'a']++;\n      count[s2.charAt(i) - 'a']--;\n    }\n    for (int c : count) {\n      if (c != 0) return false;\n    }\n    return true;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Character counting",
+          "code": "function isAnagram(s1, s2) {\n  if (s1.length !== s2.length) return false;\n  let count = {};\n  for (let ch of s1) count[ch] = (count[ch] || 0) + 1;\n  for (let ch of s2) {\n    if (!count[ch]) return false;\n    count[ch]--;\n  }\n  return true;\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Sorting",
+          "code": "function isAnagram(s1, s2) {\n  if (s1.length !== s2.length) return false;\n  return s1.split('').sort().join('') === s2.split('').sort().join('');\n}"
+        }
+      ]
+    },
+    {
+      "title": "Rotate Array by K Steps",
+      "description": "Rotate an array to the right by K steps using reversal algorithm.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Reversal algorithm",
+          "code": "public class RotateArray {\n  public static void rotate(int[] nums, int k) {\n    k %= nums.length;\n    reverse(nums, 0, nums.length - 1);\n    reverse(nums, 0, k - 1);\n    reverse(nums, k, nums.length - 1);\n  }\n\n  private static void reverse(int[] nums, int start, int end) {\n    while (start < end) {\n      int temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Extra space",
+          "code": "public class RotateArray {\n  public static void rotate(int[] nums, int k) {\n    k %= nums.length;\n    int[] result = new int[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n      result[(i + k) % nums.length] = nums[i];\n    }\n    for (int i = 0; i < nums.length; i++) {\n      nums[i] = result[i];\n    }\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Reversal algorithm",
+          "code": "function rotate(nums, k) {\n  k = k % nums.length;\n  reverse(nums, 0, nums.length - 1);\n  reverse(nums, 0, k - 1);\n  reverse(nums, k, nums.length - 1);\n\n  function reverse(arr, start, end) {\n    while (start < end) {\n      [arr[start], arr[end]] = [arr[end], arr[start]];\n      start++;\n      end--;\n    }\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Built-in methods",
+          "code": "function rotate(nums, k) {\n  k = k % nums.length;\n  let rotated = nums.slice(-k).concat(nums.slice(0, -k));\n  for (let i = 0; i < nums.length; i++) {\n    nums[i] = rotated[i];\n  }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Find First Non-Repeating Character",
+      "description": "Return the index of the first non-repeating character in a string.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "HashMap",
+          "code": "import java.util.LinkedHashMap;\n\npublic class FirstUniqueChar {\n  public static int firstUniqChar(String s) {\n    LinkedHashMap<Character, Integer> map = new LinkedHashMap<>();\n    for (char c : s.toCharArray()) {\n      map.put(c, map.getOrDefault(c, 0) + 1);\n    }\n    int index = 0;\n    for (char c : s.toCharArray()) {\n      if (map.get(c) == 1) return index;\n      index++;\n    }\n    return -1;\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Array counting",
+          "code": "public class FirstUniqueChar {\n  public static int firstUniqChar(String s) {\n    int[] count = new int[26];\n    for (char c : s.toCharArray()) {\n      count[c - 'a']++;\n    }\n    for (int i = 0; i < s.length(); i++) {\n      if (count[s.charAt(i) - 'a'] == 1) return i;\n    }\n    return -1;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "code": "function firstUniqChar(s) {\n  let freq = {};\n  for (let ch of s) freq[ch] = (freq[ch] || 0) + 1;\n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) return i;\n  }\n  return -1;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Remove Duplicates from Sorted Array",
+      "description": "Remove duplicates from a sorted array in-place.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two pointers",
+          "code": "public class RemoveDuplicates {\n  public static int removeDuplicates(int[] nums) {\n    if (nums.length == 0) return 0;\n    int slow = 0;\n    for (int fast = 1; fast < nums.length; fast++) {\n      if (nums[fast] != nums[slow]) {\n        slow++;\n        nums[slow] = nums[fast];\n      }\n    }\n    return slow + 1;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Two pointers",
+          "code": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n  let slow = 0;\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n  return slow + 1;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Two Sum",
+      "description": "Find two numbers in an array that add up to a target sum.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "HashMap",
+          "code": "import java.util.HashMap;\n\npublic class TwoSum {\n  public static int[] twoSum(int[] nums, int target) {\n    HashMap<Integer, Integer> map = new HashMap<>();\n    for (int i = 0; i < nums.length; i++) {\n      int complement = target - nums[i];\n      if (map.containsKey(complement)) {\n        return new int[]{map.get(complement), i};\n      }\n      map.put(nums[i], i);\n    }\n    return new int[]{};\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Brute force",
+          "code": "public class TwoSum {\n  public static int[] twoSum(int[] nums, int target) {\n    for (int i = 0; i < nums.length; i++) {\n      for (int j = i + 1; j < nums.length; j++) {\n        if (nums[i] + nums[j] == target) {\n          return new int[]{i, j};\n        }\n      }\n    }\n    return new int[]{};\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "HashMap",
+          "code": "function twoSum(nums, target) {\n  let map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    let complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n  return [];\n}"
+        }
+      ]
+    },
+    {
+      "title": "Merge Sorted Arrays",
+      "description": "Merge two sorted arrays into one sorted array.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two pointers",
+          "code": "public class MergeSortedArrays {\n  public static int[] merge(int[] nums1, int[] nums2) {\n    int[] result = new int[nums1.length + nums2.length];\n    int i = 0, j = 0, k = 0;\n    \n    while (i < nums1.length && j < nums2.length) {\n      if (nums1[i] <= nums2[j]) {\n        result[k++] = nums1[i++];\n      } else {\n        result[k++] = nums2[j++];\n      }\n    }\n    \n    while (i < nums1.length) result[k++] = nums1[i++];\n    while (j < nums2.length) result[k++] = nums2[j++];\n    \n    return result;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Two pointers",
+          "code": "function merge(nums1, nums2) {\n  let result = [];\n  let i = 0, j = 0;\n  \n  while (i < nums1.length && j < nums2.length) {\n    if (nums1[i] <= nums2[j]) {\n      result.push(nums1[i++]);\n    } else {\n      result.push(nums2[j++]);\n    }\n  }\n  \n  while (i < nums1.length) result.push(nums1[i++]);\n  while (j < nums2.length) result.push(nums2[j++]);\n  \n  return result;\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Built-in concat and sort",
+          "code": "function merge(nums1, nums2) {\n  return nums1.concat(nums2).sort((a, b) => a - b);\n}"
+        }
+      ]
+    },
+    {
+      "title": "Find Missing Number",
+      "description": "Find the missing number in an array containing n distinct numbers from 0 to n.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Sum formula",
+          "code": "public class MissingNumber {\n  public static int missingNumber(int[] nums) {\n    int n = nums.length;\n    int expectedSum = n * (n + 1) / 2;\n    int actualSum = 0;\n    for (int num : nums) {\n      actualSum += num;\n    }\n    return expectedSum - actualSum;\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "XOR",
+          "code": "public class MissingNumber {\n  public static int missingNumber(int[] nums) {\n    int xor = nums.length;\n    for (int i = 0; i < nums.length; i++) {\n      xor ^= i ^ nums[i];\n    }\n    return xor;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Sum formula",
+          "code": "function missingNumber(nums) {\n  let n = nums.length;\n  let expectedSum = n * (n + 1) / 2;\n  let actualSum = nums.reduce((sum, num) => sum + num, 0);\n  return expectedSum - actualSum;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Longest Common Prefix",
+      "description": "Find the longest common prefix string amongst an array of strings.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Vertical scanning",
+          "code": "public class LongestCommonPrefix {\n  public static String longestCommonPrefix(String[] strs) {\n    if (strs.length == 0) return \"\";\n    for (int i = 0; i < strs[0].length(); i++) {\n      char c = strs[0].charAt(i);\n      for (int j = 1; j < strs.length; j++) {\n        if (i >= strs[j].length() || strs[j].charAt(i) != c) {\n          return strs[0].substring(0, i);\n        }\n      }\n    }\n    return strs[0];\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Vertical scanning",
+          "code": "function longestCommonPrefix(strs) {\n  if (strs.length === 0) return \"\";\n  for (let i = 0; i < strs[0].length; i++) {\n    let char = strs[0][i];\n    for (let j = 1; j < strs.length; j++) {\n      if (i >= strs[j].length || strs[j][i] !== char) {\n        return strs[0].substring(0, i);\n      }\n    }\n  }\n  return strs[0];\n}"
+        }
+      ]
+    },
+    {
+      "title": "Valid Parentheses",
+      "description": "Check if a string containing parentheses is valid.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Stack",
+          "code": "import java.util.Stack;\n\npublic class ValidParentheses {\n  public static boolean isValid(String s) {\n    Stack<Character> stack = new Stack<>();\n    for (char c : s.toCharArray()) {\n      if (c == '(' || c == '[' || c == '{') {\n        stack.push(c);\n      } else {\n        if (stack.isEmpty()) return false;\n        char top = stack.pop();\n        if ((c == ')' && top != '(') || \n            (c == ']' && top != '[') || \n            (c == '}' && top != '{')) {\n          return false;\n        }\n      }\n    }\n    return stack.isEmpty();\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Stack",
+          "code": "function isValid(s) {\n  let stack = [];\n  let map = {')': '(', ']': '[', '}': '{'};\n  \n  for (let char of s) {\n    if (char === '(' || char === '[' || char === '{') {\n      stack.push(char);\n    } else {\n      if (stack.length === 0 || stack.pop() !== map[char]) {\n        return false;\n      }\n    }\n  }\n  return stack.length === 0;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Remove Element",
+      "description": "Remove all instances of a value from an array in-place.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Two pointers",
+          "code": "public class RemoveElement {\n  public static int removeElement(int[] nums, int val) {\n    int slow = 0;\n    for (int fast = 0; fast < nums.length; fast++) {\n      if (nums[fast] != val) {\n        nums[slow] = nums[fast];\n        slow++;\n      }\n    }\n    return slow;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Two pointers",
+          "code": "function removeElement(nums, val) {\n  let slow = 0;\n  for (let fast = 0; fast < nums.length; fast++) {\n    if (nums[fast] !== val) {\n      nums[slow] = nums[fast];\n      slow++;\n    }\n  }\n  return slow;\n}"
+        }
+      ]
+    },
+    {
+      "title": "Contains Duplicate",
+      "description": "Check if any value appears at least twice in an array.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "HashSet",
+          "code": "import java.util.HashSet;\n\npublic class ContainsDuplicate {\n  public static boolean containsDuplicate(int[] nums) {\n    HashSet<Integer> set = new HashSet<>();\n    for (int num : nums) {\n      if (set.contains(num)) return true;\n      set.add(num);\n    }\n    return false;\n  }\n}"
+        },
+        {
+          "language": "java",
+          "approach": "Sorting",
+          "code": "import java.util.Arrays;\n\npublic class ContainsDuplicate {\n  public static boolean containsDuplicate(int[] nums) {\n    Arrays.sort(nums);\n    for (int i = 1; i < nums.length; i++) {\n      if (nums[i] == nums[i-1]) return true;\n    }\n    return false;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Set",
+          "code": "function containsDuplicate(nums) {\n  return new Set(nums).size !== nums.length;\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Manual checking",
+          "code": "function containsDuplicate(nums) {\n  let seen = new Set();\n  for (let num of nums) {\n    if (seen.has(num)) return true;\n    seen.add(num);\n  }\n  return false;\n}"
+        }
+      ]
+    },
+    {
+      "title": "String to Integer (atoi)",
+      "description": "Convert a string to a 32-bit signed integer.",
+      "solutions": [
+        {
+          "language": "java",
+          "approach": "Manual parsing",
+          "code": "public class StringToInteger {\n  public static int myAtoi(String s) {\n    if (s == null || s.length() == 0) return 0;\n    \n    int i = 0, sign = 1, result = 0;\n    \n    while (i < s.length() && s.charAt(i) == ' ') i++;\n    \n    if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-')) {\n      sign = s.charAt(i) == '-' ? -1 : 1;\n      i++;\n    }\n    \n    while (i < s.length() && Character.isDigit(s.charAt(i))) {\n      int digit = s.charAt(i) - '0';\n      if (result > (Integer.MAX_VALUE - digit) / 10) {\n        return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;\n      }\n      result = result * 10 + digit;\n      i++;\n    }\n    \n    return result * sign;\n  }\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Manual parsing",
+          "code": "function myAtoi(s) {\n  let i = 0, sign = 1, result = 0;\n  const MAX_INT = 2147483647;\n  const MIN_INT = -2147483648;\n  \n  while (i < s.length && s[i] === ' ') i++;\n  \n  if (i < s.length && (s[i] === '+' || s[i] === '-')) {\n    sign = s[i] === '-' ? -1 : 1;\n    i++;\n  }\n  \n  while (i < s.length && /\\d/.test(s[i])) {\n    result = result * 10 + parseInt(s[i]);\n    if (result * sign > MAX_INT) return MAX_INT;\n    if (result * sign < MIN_INT) return MIN_INT;\n    i++;\n  }\n  \n  return result * sign;\n}"
+        },
+        {
+          "language": "javascript",
+          "approach": "Built-in parseInt",
+          "code": "function myAtoi(s) {\n  const MAX_INT = 2147483647;\n  const MIN_INT = -2147483648;\n  \n  let result = parseInt(s.trim());\n  \n  if (isNaN(result)) return 0;\n  if (result > MAX_INT) return MAX_INT;\n  if (result < MIN_INT) return MIN_INT;\n  \n  return result;\n}"
+        }
+      ]
+    }
+  ]

@@ -904,3 +904,98 @@ body {
   border-top: 1px solid #30363d;
   margin: 2em 0;
 }
+
+
+
+
+
+
+
+/* app/globals.css */
+
+/* ... (all your existing CSS) ... */
+
+
+/* --- Code Example Component Styles --- */
+.code-example-container {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #30363d;
+}
+
+.code-example-title {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: var(--primary-text);
+  margin-bottom: 10px;
+}
+
+.code-example-description {
+  font-size: 1em;
+  color: var(--secondary-text);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.code-block-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #30363d;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.code-block-header {
+  background-color: #3c3c3c; /* VS Code-like header color */
+  padding: 8px 15px;
+  color: #cccccc;
+  font-family: monospace;
+  font-size: 0.9em;
+  border-bottom: 1px solid #30363d;
+}
+
+/* Responsive adjustments for code blocks */
+@media (max-width: 768px) {
+  .code-example-title {
+    font-size: 1.5em;
+  }
+  .code-example-description {
+    font-size: 0.95em;
+  }
+}
+
+
+/* app/globals.css */
+
+/* ... (all your existing CSS) ... */
+
+
+/* --- Language Tab Styles for CodeExample Component --- */
+.language-tabs {
+  display: flex;
+  background-color: #3c3c3c; /* VS Code-like header color */
+  padding: 0 10px;
+  border-bottom: 1px solid #30363d;
+  border-radius: 8px 8px 0 0; /* Match the wrapper's top corners */
+}
+
+.language-tab {
+  background: none;
+  border: none;
+  color: #cccccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 0.9em;
+  border-bottom: 2px solid transparent; /* For the active indicator */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.language-tab:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.language-tab.active {
+  color: white;
+  font-weight: bold;
+  border-bottom-color: var(--accent-text); /* Active tab indicator */
+}

@@ -28,6 +28,55 @@ export default function HomePage() {
       return <p>Loading topics...</p>;
     }
 
+    // const sectionsToDisplay = [
+    //   {
+    //     key: 'core-cs',
+    //     title: 'Core Programming & CS',
+    //     icon: '💻',
+    //     sectionData: {
+    //       subsections: {
+    //         dsa: topicDefinitions.dsa,
+    //         oop: topicDefinitions.oop,
+    //         database: topicDefinitions.database,
+    //       }
+    //     }
+    //   },
+    //   {
+    //     key: 'aptitude',
+    //     title: 'Aptitude & Reasoning',
+    //     icon: '🧠',
+    //     sectionData: topicDefinitions.aptitude,
+    //   },
+    //   {
+    //     key: 'security-networks',
+    //     title: 'Security & Networks',
+    //     icon: '🛡️',
+    //     sectionData: {
+    //       subsections: {
+    //         security: topicDefinitions.security,
+    //         networks: topicDefinitions.networks,
+    //       }
+    //     }
+    //   },
+    //   {
+    //     key: 'aiml',
+    //     title: 'Artificial Intelligence & Machine Learning ',
+    //     icon: '🤯',
+    //     sectionData: {
+    //       subsections: {
+    //         aiml: topicDefinitions.aiml, // <--- THIS IS THE PROBLEM
+    //         networks: topicDefinitions.networks,
+    //       }
+    //     }
+    //   },
+    //   {
+    //     key: 'swe',
+    //     title: 'Software Engineering',
+    //     icon: '🏗️',
+    //     sectionData: topicDefinitions.swe,
+    //   },
+    // ];
+
     const sectionsToDisplay = [
       {
         key: 'core-cs',
@@ -59,13 +108,26 @@ export default function HomePage() {
         }
       },
       {
+        key: 'aiml',
+        title: 'Artificial Intelligence & Machine Learning ',
+        icon: '🤯',
+        sectionData: {
+          subsections: {
+            // FIX: Change AIML to aiml (all lowercase)
+            aiml: topicDefinitions.aiml,
+            // NOTE: You are also including 'networks' here. If you only want AIML, remove this line.
+            // networks: topicDefinitions.networks, 
+          }
+        }
+      },
+      {
         key: 'swe',
         title: 'Software Engineering',
         icon: '🏗️',
         sectionData: topicDefinitions.swe,
       },
     ];
-
+    
     Object.keys(topicDefinitions).forEach(key => {
       const isAlreadyDisplayed = sectionsToDisplay.some(s => {
         if (s.key === key) return true;
@@ -84,6 +146,7 @@ export default function HomePage() {
     });
 
 
+
     return sectionsToDisplay.map(section => {
       if (!section.sectionData || (section.sectionData.subsections && Object.values(section.sectionData.subsections).some(sub => !sub))) {
         console.warn(`Skipping section due to missing or incomplete data: ${section.key}`);
@@ -91,32 +154,28 @@ export default function HomePage() {
       }
       return (
         <TopicSection
-          key={section.key}
-          title={section.title}
-          icon={section.icon}
-          sectionData={section.sectionData}
-          topicStates={topicStates}
-          onToggleTopic={handleToggleTopic}
-          onAddSubtopic={handleAddSubtopic}
-          onDeleteTopic={handleDeleteTopic}
-          onDeleteSection={handleDeleteSection}
-        />
+        key={section.key}
+        title={section.title}
+        icon={section.icon}
+        sectionData={section.sectionData}
+        topicStates={topicStates}
+        onToggleTopic={handleToggleTopic}
+        onAddSubtopic={handleAddSubtopic}
+        onDeleteTopic={handleDeleteTopic}
+        onDeleteSection={handleDeleteSection}
+      />
       );
     });
   };
 
 
   return (
-    <DashboardLayout> {/* Wrap content with DashboardLayout */}
+    <DashboardLayout>
       <div className="content-area">
         <CompanyInfo companyName={companyName} />
-
         <h2 className="section-title">📚 Technical & Aptitude Preparation</h2>
-
         <AddTopicForm onAddMainTopic={handleAddMainTopic} />
-
         {renderTopicSections()}
-
       </div>
     </DashboardLayout>
   );

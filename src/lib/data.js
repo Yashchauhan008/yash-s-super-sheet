@@ -12,6 +12,10 @@ export const initialTopicDefinitions = {
         name: "OOP",
         topics: ["Classes & Objects", "Encapsulation", "Inheritance", "Polymorphism", "Abstraction", "SOLID Principles", "Design Patterns"]
     },
+    aiml: {
+        name: "AIML",
+        topics: ["libraries"]
+    },
     dsa: {
         name: "DSA",
         topics: ["Arrays & Strings", "Linked Lists", "Stacks & Queues", "Trees (BST, AVL)", "Heaps", "Graphs", "Hashing", "Sorting Algorithms", "Searching Algorithms", "Dynamic Programming", "Greedy Algorithms", "Backtracking", "Complexity Analysis"]
